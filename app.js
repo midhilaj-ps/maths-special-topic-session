@@ -642,25 +642,25 @@ function initVedicLab() {
 
     outputContainer.innerHTML = `
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-        <div class="bg-emerald-950 p-3 rounded-xl border border-green-400/20">
-          <div class="text-green-300 font-bold mb-1">Step 1: Vertical (Units)</div>
-          <div class="text-slate-200 font-mono">${b} × ${d} = <strong class="text-white">${step1}</strong></div>
-          <div class="text-slate-300 mt-1">Write: <span class="text-green-400 font-bold">${unitDigit}</span> | Carry: <span class="text-emerald-300">${carry1}</span></div>
+        <div class="bg-emerald-50 p-3 rounded-xl border border-green-200">
+          <div class="text-emerald-800 font-bold mb-1">Step 1: Vertical (Units)</div>
+          <div class="text-slate-700 font-mono">${b} × ${d} = <strong class="text-emerald-900">${step1}</strong></div>
+          <div class="text-slate-600 mt-1">Write: <span class="text-green-700 font-bold">${unitDigit}</span> | Carry: <span class="text-emerald-600">${carry1}</span></div>
         </div>
-        <div class="bg-emerald-950 p-3 rounded-xl border border-green-400/20">
-          <div class="text-emerald-300 font-bold mb-1">Step 2: Criss-Cross</div>
-          <div class="text-slate-200 font-mono">(${a}×${d}) + (${b}×${c}) + ${carry1} = <strong class="text-white">${step2}</strong></div>
-          <div class="text-slate-300 mt-1">Write: <span class="text-green-400 font-bold">${tenDigit}</span> | Carry: <span class="text-emerald-300">${carry2}</span></div>
+        <div class="bg-emerald-50 p-3 rounded-xl border border-green-200">
+          <div class="text-emerald-800 font-bold mb-1">Step 2: Criss-Cross</div>
+          <div class="text-slate-700 font-mono">(${a}×${d}) + (${b}×${c}) + ${carry1} = <strong class="text-emerald-900">${step2}</strong></div>
+          <div class="text-slate-600 mt-1">Write: <span class="text-green-700 font-bold">${tenDigit}</span> | Carry: <span class="text-emerald-600">${carry2}</span></div>
         </div>
-        <div class="bg-emerald-950 p-3 rounded-xl border border-green-400/20">
-          <div class="text-teal-300 font-bold mb-1">Step 3: Vertical (Tens)</div>
-          <div class="text-slate-200 font-mono">(${a} × ${c}) + ${carry2} = <strong class="text-white">${step3}</strong></div>
-          <div class="text-slate-300 mt-1">Write: <span class="text-green-400 font-bold">${step3}</span></div>
+        <div class="bg-emerald-50 p-3 rounded-xl border border-green-200">
+          <div class="text-emerald-800 font-bold mb-1">Step 3: Vertical (Tens)</div>
+          <div class="text-slate-700 font-mono">(${a} × ${c}) + ${carry2} = <strong class="text-emerald-900">${step3}</strong></div>
+          <div class="text-slate-600 mt-1">Write: <span class="text-green-700 font-bold">${step3}</span></div>
         </div>
       </div>
-      <div class="mt-3 p-3 bg-gradient-to-r from-emerald-900 to-green-900 rounded-xl border border-green-400/30 flex items-center justify-between">
-        <span class="text-xs font-semibold text-green-200">⚡ Instant 3-Second Mental Answer:</span>
-        <span class="text-xl font-black font-mono text-green-300">${n1} × ${n2} = ${finalAnswer}</span>
+      <div class="mt-3 p-3 bg-emerald-100/70 rounded-xl border border-green-300 flex items-center justify-between">
+        <span class="text-xs font-semibold text-emerald-900">⚡ Instant 3-Second Mental Answer:</span>
+        <span class="text-xl font-black font-mono text-emerald-800">${n1} × ${n2} = ${finalAnswer}</span>
       </div>
     `;
   }
@@ -895,10 +895,10 @@ function generateAiAgentMessage(name, phone, userType, topic, preferredTime) {
   }
 
   const messageLines = [
-    "🤖 *MATHS MYSTERY BY EEYES | AI ACADEMIC BRIEFING*",
+    "🤖 *SIMMATHS BY EEYES | AI ACADEMIC BRIEFING*",
     "━━━━━━━━━━━━━━━━━━━━━━━━━━━",
     "👋 *Greetings Tutor!*",
-    "An automated academic briefing has been compiled via the *Maths Mystery by Eeyes* portal for a student seeking 1-session mastery.",
+    "An automated academic briefing has been compiled via the *SIMMATHS (Online Maths Training by EEYES)* portal for a student seeking 1-session mastery.",
     "",
     "📋 *STUDENT PROFILE & BOOKING DOSSIER:*",
     `• *Student / Parent Name:* ${name}`,
@@ -949,7 +949,7 @@ function handleBookingSubmission() {
     return;
   }
 
-  const waNumber = '919747066478';
+  const waNumber = '918590987327';
   const rawAiMessage = generateAiAgentMessage(name, phone, userType, topic, preferredTime);
   const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(rawAiMessage)}`;
 
@@ -1067,10 +1067,10 @@ function initCopyButtons() {
   const copyBtns = document.querySelectorAll('.copy-phone-btn');
   copyBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      navigator.clipboard.writeText('9747066478').then(() => {
-        showToast('📞 Phone number 9747066478 copied to clipboard!');
+      navigator.clipboard.writeText('8590987327').then(() => {
+        showToast('📞 Phone number 8590987327 copied to clipboard!');
       }).catch(() => {
-        showToast('📞 Contact: 9747066478');
+        showToast('📞 Contact: 8590987327');
       });
     });
   });
@@ -1148,3 +1148,30 @@ function triggerConfetti() {
     }, 1300);
   }
 }
+
+/* ==========================================================================
+   9. HIGH-RES MATH GRAPHIC LIGHTBOX MODAL
+   ========================================================================== */
+window.openMathModal = function(imgSrc, title) {
+  const modal = document.getElementById('math-image-modal');
+  const modalImg = document.getElementById('math-modal-img');
+  const modalTitle = document.getElementById('math-modal-title');
+  if (modal && modalImg && modalTitle) {
+    modalImg.src = imgSrc;
+    modalTitle.textContent = title;
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+};
+
+window.closeMathModal = function() {
+  const modal = document.getElementById('math-image-modal');
+  if (modal) {
+    modal.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+};
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') window.closeMathModal();
+});

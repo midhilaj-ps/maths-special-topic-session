@@ -33,7 +33,7 @@ Render will deploy your site in ~30 seconds and provide a live URL like:
 - **Responsive Hero Section** with poster highlights and trust metrics.
 - **Audience Segmentation**: School Students (Classes 5 to 12) & Competitive Aspirants (PSC, SSC, MTS, RRB, Banking).
 - **Interactive Topic Selector**: Filter by School, Competitive, Speed Maths with auto-fill booking action.
-- **Instant WhatsApp Booking Link Generator**: Sends pre-filled inquiries directly to `9747066478`.
-- **Direct Calling Links & Copy Action**: Contact `9747066478`.
+- **Instant WhatsApp Booking Link Generator**: Sends pre-filled inquiries directly to `8590987327`.
+- **Direct Calling Links & Copy Action**: Contact `8590987327`.
 - **Poster Lightbox Modal**: View original high-resolution poster anytime.
 - **FAQ Accordion & Floating Mobile Sticky Action Bar**.

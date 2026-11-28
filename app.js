@@ -2,6 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   initLucideIcons();
+  initAiMathOrb();
   initMathHeroCanvas();
   initAiMathLab();
   initTopicFilter();
@@ -18,6 +19,165 @@ function initLucideIcons() {
   if (window.lucide) {
     window.lucide.createIcons();
   }
+}
+
+/* ==========================================================================
+   0. AI MATHEMATICAL 3D HOLOGRAPHIC CORE ANIMATION (HERO WIDGET)
+   ========================================================================== */
+function initAiMathOrb() {
+  const canvas = document.getElementById('ai-math-orb-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  let width = (canvas.width = 220);
+  let height = (canvas.height = 220);
+  const cx = width / 2;
+  const cy = height / 2;
+
+  let angleX = 0;
+  let angleY = 0;
+  let targetAngleX = 0;
+  let targetAngleY = 0;
+
+  window.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - (rect.left + rect.width / 2);
+    const my = e.clientY - (rect.top + rect.height / 2);
+    targetAngleY = (mx / window.innerWidth) * 1.6;
+    targetAngleX = -(my / window.innerHeight) * 1.6;
+  });
+
+  const baseVertices = [
+    [0, 1, 0], [0, -1, 0], [1, 0, 0], [-1, 0, 0], [0, 0, 1], [0, 0, -1],
+    [0.6, 0.6, 0.6], [0.6, 0.6, -0.6], [0.6, -0.6, 0.6], [0.6, -0.6, -0.6],
+    [-0.6, 0.6, 0.6], [-0.6, 0.6, -0.6], [-0.6, -0.6, 0.6], [-0.6, -0.6, -0.6]
+  ];
+
+  const edges = [
+    [0, 2], [0, 3], [0, 4], [0, 5],
+    [1, 2], [1, 3], [1, 4], [1, 5],
+    [2, 4], [4, 3], [3, 5], [5, 2],
+    [0, 6], [0, 7], [0, 10], [0, 11],
+    [1, 8], [1, 9], [1, 12], [1, 13],
+    [2, 6], [2, 7], [2, 8], [2, 9],
+    [3, 10], [3, 11], [3, 12], [3, 13]
+  ];
+
+  const orbRadius = 55;
+  let time = 0;
+
+  function project3D(x, y, z) {
+    let cosY = Math.cos(angleY), sinY = Math.sin(angleY);
+    let x1 = x * cosY + z * sinY;
+    let z1 = -x * sinY + z * cosY;
+
+    let cosX = Math.cos(angleX), sinX = Math.sin(angleX);
+    let y2 = y * cosX - z1 * sinX;
+    let z2 = y * sinX + z1 * cosX;
+
+    const fov = 200;
+    const scale = fov / (fov + z2 * orbRadius);
+    return {
+      x: cx + x1 * orbRadius * scale,
+      y: cy + y2 * orbRadius * scale,
+      z: z2,
+      scale: scale
+    };
+  }
+
+  function renderOrb() {
+    ctx.clearRect(0, 0, width, height);
+
+    time += 0.025;
+    angleX += (targetAngleX - angleX) * 0.05 + 0.008;
+    angleY += (targetAngleY - angleY) * 0.05 + 0.015;
+
+    // 1. Radiant Glowing Cybernetic Core in Light Parrot Green
+    const pulse = 1 + 0.15 * Math.sin(time * 3);
+    const grad = ctx.createRadialGradient(cx, cy, 2, cx, cy, 38 * pulse);
+    grad.addColorStop(0, 'rgba(74, 222, 128, 0.95)');
+    grad.addColorStop(0.35, 'rgba(34, 197, 94, 0.65)');
+    grad.addColorStop(0.7, 'rgba(134, 239, 172, 0.25)');
+    grad.addColorStop(1, 'rgba(240, 253, 244, 0)');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(cx, cy, 40 * pulse, 0, Math.PI * 2);
+    ctx.fill();
+
+    // 2. Concentric Polar Coordinate Wave Rings (Gyroscopic)
+    // Ring A (Vibrant Parrot Green)
+    ctx.strokeStyle = 'rgba(34, 197, 94, 0.85)';
+    ctx.lineWidth = 1.6;
+    ctx.beginPath();
+    for (let theta = 0; theta <= Math.PI * 2; theta += 0.1) {
+      let rX = Math.cos(theta) * 78;
+      let rY = Math.sin(theta) * 78 * Math.cos(time * 0.8);
+      let rZ = Math.sin(theta) * 78 * Math.sin(time * 0.8);
+      let p = project3D(rX / orbRadius, rY / orbRadius, rZ / orbRadius);
+      if (theta === 0) ctx.moveTo(p.x, p.y);
+      else ctx.lineTo(p.x, p.y);
+    }
+    ctx.closePath();
+    ctx.stroke();
+
+    // Ring B (Bright Lime / Light Green Harmonic Rose Wave)
+    ctx.strokeStyle = 'rgba(74, 222, 128, 0.8)';
+    ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    for (let theta = 0; theta <= Math.PI * 2; theta += 0.08) {
+      let waveR = (64 + 10 * Math.sin(5 * theta + time * 2)) / orbRadius;
+      let rX = Math.cos(theta) * waveR;
+      let rY = Math.sin(theta) * waveR;
+      let p = project3D(rX, rY, 0);
+      if (theta === 0) ctx.moveTo(p.x, p.y);
+      else ctx.lineTo(p.x, p.y);
+    }
+    ctx.closePath();
+    ctx.stroke();
+
+    // 3. 3D Polyhedron Edges
+    const projected = baseVertices.map(v => project3D(v[0], v[1], v[2]));
+
+    for (let e of edges) {
+      const p1 = projected[e[0]];
+      const p2 = projected[e[1]];
+      const avgZ = (p1.z + p2.z) / 2;
+      const alpha = Math.max(0.2, Math.min(0.95, (avgZ + 1.2) / 2.2));
+
+      ctx.strokeStyle = `rgba(22, 163, 74, ${alpha})`;
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      ctx.moveTo(p1.x, p1.y);
+      ctx.lineTo(p2.x, p2.y);
+      ctx.stroke();
+    }
+
+    // Vertex Nodes
+    for (let p of projected) {
+      const nodeAlpha = Math.max(0.3, (p.z + 1.2) / 2.2);
+      ctx.fillStyle = `rgba(34, 197, 94, ${nodeAlpha})`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 2.5 * p.scale, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // 4. Mathematical Cybernetic Eye Pupil in the Center
+    const eyeOffsetX = (targetAngleY * 8);
+    const eyeOffsetY = (-targetAngleX * 8);
+    ctx.fillStyle = '#064e3b';
+    ctx.beginPath();
+    ctx.arc(cx + eyeOffsetX, cy + eyeOffsetY, 9, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#4ade80';
+    ctx.beginPath();
+    ctx.arc(cx + eyeOffsetX + 2, cy + eyeOffsetY - 2, 3, 0, Math.PI * 2);
+    ctx.fill();
+
+    requestAnimationFrame(renderOrb);
+  }
+
+  renderOrb();
 }
 
 /* ==========================================================================
@@ -68,7 +228,7 @@ function initMathHeroCanvas() {
       this.symbol = mathSymbols[Math.floor(Math.random() * mathSymbols.length)];
       this.hasSymbol = Math.random() > 0.55;
       this.baseAlpha = Math.random() * 0.4 + 0.2;
-      this.color = Math.random() > 0.5 ? 'rgba(245, 158, 11,' : 'rgba(56, 189, 248,';
+      this.color = Math.random() > 0.5 ? 'rgba(34, 197, 94,' : 'rgba(22, 163, 74,';
     }
 
     update() {
@@ -116,8 +276,8 @@ function initMathHeroCanvas() {
         const dist = Math.sqrt(dx * dx + dy * dy);
 
         if (dist < 110) {
-          const alpha = (1 - dist / 110) * 0.18;
-          ctx.strokeStyle = `rgba(56, 189, 248, ${alpha})`;
+          const alpha = (1 - dist / 110) * 0.22;
+          ctx.strokeStyle = `rgba(34, 197, 94, ${alpha})`;
           ctx.lineWidth = 0.8;
           ctx.beginPath();
           ctx.moveTo(particles[a].x, particles[a].y);
@@ -132,9 +292,9 @@ function initMathHeroCanvas() {
         const dy = mouse.y - particles[a].y;
         const dist = Math.sqrt(dx * dx + dy * dy);
         if (dist < 130) {
-          const alpha = (1 - dist / 130) * 0.35;
-          ctx.strokeStyle = `rgba(245, 158, 11, ${alpha})`;
-          ctx.lineWidth = 1;
+          const alpha = (1 - dist / 130) * 0.4;
+          ctx.strokeStyle = `rgba(74, 222, 128, ${alpha})`;
+          ctx.lineWidth = 1.2;
           ctx.beginPath();
           ctx.moveTo(particles[a].x, particles[a].y);
           ctx.lineTo(mouse.x, mouse.y);
@@ -170,11 +330,11 @@ function initAiMathLab() {
     tab.addEventListener('click', () => {
       const target = tab.getAttribute('data-tab');
       labTabs.forEach(t => {
-        t.classList.remove('bg-amber-500', 'text-slate-950', 'shadow-md');
-        t.classList.add('bg-navy-800', 'text-slate-300', 'hover:bg-navy-700');
+        t.classList.remove('bg-green-600', 'text-white', 'shadow-md', 'shadow-green-600/25');
+        t.classList.add('bg-white', 'text-slate-700', 'hover:bg-green-50');
       });
-      tab.classList.add('bg-amber-500', 'text-slate-950', 'shadow-md');
-      tab.classList.remove('bg-navy-800', 'text-slate-300', 'hover:bg-navy-700');
+      tab.classList.add('bg-green-600', 'text-white', 'shadow-md', 'shadow-green-600/25');
+      tab.classList.remove('bg-white', 'text-slate-700', 'hover:bg-green-50');
 
       labPanels.forEach(panel => {
         if (panel.id === `lab-${target}`) {
@@ -482,25 +642,25 @@ function initVedicLab() {
 
     outputContainer.innerHTML = `
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-        <div class="bg-navy-900 p-3 rounded-xl border border-white/10">
-          <div class="text-amber-400 font-bold mb-1">Step 1: Vertical (Units)</div>
-          <div class="text-slate-300 font-mono">${b} × ${d} = <strong class="text-white">${step1}</strong></div>
-          <div class="text-slate-400 mt-1">Write: <span class="text-emerald-400 font-bold">${unitDigit}</span> | Carry: <span class="text-amber-300">${carry1}</span></div>
+        <div class="bg-emerald-950 p-3 rounded-xl border border-green-400/20">
+          <div class="text-green-300 font-bold mb-1">Step 1: Vertical (Units)</div>
+          <div class="text-slate-200 font-mono">${b} × ${d} = <strong class="text-white">${step1}</strong></div>
+          <div class="text-slate-300 mt-1">Write: <span class="text-green-400 font-bold">${unitDigit}</span> | Carry: <span class="text-emerald-300">${carry1}</span></div>
         </div>
-        <div class="bg-navy-900 p-3 rounded-xl border border-white/10">
-          <div class="text-sky-400 font-bold mb-1">Step 2: Criss-Cross</div>
-          <div class="text-slate-300 font-mono">(${a}×${d}) + (${b}×${c}) + ${carry1} = <strong class="text-white">${step2}</strong></div>
-          <div class="text-slate-400 mt-1">Write: <span class="text-emerald-400 font-bold">${tenDigit}</span> | Carry: <span class="text-amber-300">${carry2}</span></div>
+        <div class="bg-emerald-950 p-3 rounded-xl border border-green-400/20">
+          <div class="text-emerald-300 font-bold mb-1">Step 2: Criss-Cross</div>
+          <div class="text-slate-200 font-mono">(${a}×${d}) + (${b}×${c}) + ${carry1} = <strong class="text-white">${step2}</strong></div>
+          <div class="text-slate-300 mt-1">Write: <span class="text-green-400 font-bold">${tenDigit}</span> | Carry: <span class="text-emerald-300">${carry2}</span></div>
         </div>
-        <div class="bg-navy-900 p-3 rounded-xl border border-white/10">
-          <div class="text-emerald-400 font-bold mb-1">Step 3: Vertical (Tens)</div>
-          <div class="text-slate-300 font-mono">(${a} × ${c}) + ${carry2} = <strong class="text-white">${step3}</strong></div>
-          <div class="text-slate-400 mt-1">Write: <span class="text-emerald-400 font-bold">${step3}</span></div>
+        <div class="bg-emerald-950 p-3 rounded-xl border border-green-400/20">
+          <div class="text-teal-300 font-bold mb-1">Step 3: Vertical (Tens)</div>
+          <div class="text-slate-200 font-mono">(${a} × ${c}) + ${carry2} = <strong class="text-white">${step3}</strong></div>
+          <div class="text-slate-300 mt-1">Write: <span class="text-green-400 font-bold">${step3}</span></div>
         </div>
       </div>
-      <div class="mt-3 p-3 bg-gradient-to-r from-amber-500/20 to-sky-500/20 rounded-xl border border-amber-400/30 flex items-center justify-between">
-        <span class="text-xs font-semibold text-slate-300">⚡ Instant 3-Second Mental Answer:</span>
-        <span class="text-xl font-black font-mono text-amber-300">${n1} × ${n2} = ${finalAnswer}</span>
+      <div class="mt-3 p-3 bg-gradient-to-r from-emerald-900 to-green-900 rounded-xl border border-green-400/30 flex items-center justify-between">
+        <span class="text-xs font-semibold text-green-200">⚡ Instant 3-Second Mental Answer:</span>
+        <span class="text-xl font-black font-mono text-green-300">${n1} × ${n2} = ${finalAnswer}</span>
       </div>
     `;
   }
@@ -601,11 +761,11 @@ function initTopicFilter() {
 
     filtered.forEach(topic => {
       const card = document.createElement('div');
-      card.className = 'bg-white rounded-2xl p-6 shadow-sm border border-slate-200 card-hover flex flex-col justify-between transition-all';
+      card.className = 'bg-white rounded-2xl p-6 shadow-sm border border-green-200 card-hover flex flex-col justify-between transition-all';
       card.innerHTML = `
         <div>
           <div class="flex items-center justify-between mb-4">
-            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-green-200">
               ${topic.badge}
             </span>
             <span class="text-xs uppercase tracking-wider text-slate-400 font-bold">${topic.category.toUpperCase()}</span>
@@ -615,7 +775,7 @@ function initTopicFilter() {
           <div class="space-y-1.5 mb-6">
             ${topic.highlights.map(h => `
               <div class="flex items-center text-xs font-medium text-slate-700">
-                <span class="text-emerald-500 mr-2 font-bold">✓</span>
+                <span class="text-emerald-600 mr-2 font-bold">✓</span>
                 <span>${h}</span>
               </div>
             `).join('')}
@@ -623,7 +783,7 @@ function initTopicFilter() {
         </div>
         <button 
           onclick="selectTopicForBooking('${topic.name}')"
-          class="w-full py-2.5 px-4 bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-white font-semibold rounded-xl text-sm transition-colors flex items-center justify-center gap-2 group">
+          class="w-full py-2.5 px-4 bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-500 hover:to-emerald-400 text-white font-bold rounded-xl text-sm transition-all shadow-md shadow-green-600/20 flex items-center justify-center gap-2 group">
           <span>Lock This Topic</span>
           <span class="group-hover:translate-x-1 transition-transform">→</span>
         </button>
@@ -637,11 +797,11 @@ function initTopicFilter() {
   filterButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       filterButtons.forEach(b => {
-        b.classList.remove('bg-navy-primary', 'text-white', 'shadow-md');
-        b.classList.add('bg-white', 'text-slate-600', 'hover:bg-slate-100');
+        b.classList.remove('bg-emerald-600', 'text-white', 'shadow-md');
+        b.classList.add('bg-white', 'text-slate-600', 'hover:bg-emerald-50', 'hover:text-emerald-800');
       });
-      btn.classList.add('bg-navy-primary', 'text-white', 'shadow-md');
-      btn.classList.remove('bg-white', 'text-slate-600', 'hover:bg-slate-100');
+      btn.classList.add('bg-emerald-600', 'text-white', 'shadow-md');
+      btn.classList.remove('bg-white', 'text-slate-600', 'hover:bg-emerald-50', 'hover:text-emerald-800');
       renderTopics(btn.getAttribute('data-filter'));
     });
   });

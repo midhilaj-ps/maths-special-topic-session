@@ -1,20 +1,20 @@
-/* Custom CSS styles for Maths Special Topic Session */
+/* Custom CSS styles for Maths Special Topic Session - White + Light Parrot Green Theme */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap');
 
 :root {
-  --navy-dark: #09182a;
-  --navy-primary: #0f2c4f;
-  --navy-light: #1e3a61;
-  --gold-primary: #f59e0b;
-  --gold-dark: #d97706;
-  --gold-light: #fbbf24;
-  --accent-cyan: #0284c7;
-  --accent-teal: #0d9488;
+  --green-dark: #064e3b;
+  --green-deep: #0f291e;
+  --parrot-primary: #22c55e;
+  --parrot-light: #4ade80;
+  --parrot-bright: #86efac;
+  --parrot-soft: #f0fdf4;
+  --parrot-border: #bbf7d0;
+  --amber-accent: #f59e0b;
 }
 
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  background-color: #f8fafc;
+  background-color: #ffffff;
   color: #1e293b;
   overflow-x: hidden;
   scroll-behavior: smooth;
@@ -24,44 +24,46 @@ h1, h2, h3, h4, .font-heading {
   font-family: 'Outfit', sans-serif;
 }
 
-/* Gradient Backgrounds */
+/* Light Parrot Green Gradient Backgrounds */
 .hero-gradient {
-  background: radial-gradient(circle at 50% 20%, #163863 0%, #0f2c4f 45%, #09182a 100%);
+  background: radial-gradient(circle at 50% 15%, #ecfdf5 0%, #f0fdf4 50%, #ffffff 100%) !important;
 }
 
-.navy-banner {
-  background: linear-gradient(135deg, #0b1d33 0%, #102d52 100%);
+.parrot-banner {
+  background: linear-gradient(135deg, #15803d 0%, #16a34a 50%, #22c55e 100%);
 }
 
-.gold-badge {
-  background: linear-gradient(90deg, #f59e0b, #d97706);
+.parrot-badge {
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+}
+
+.parrot-gradient-text {
+  background: linear-gradient(135deg, #15803d 0%, #22c55e 55%, #16a34a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .gold-gradient-text {
-  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 60%, #fb923c 100%);
+  background: linear-gradient(135deg, #15803d 0%, #22c55e 60%, #16a34a 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.cyan-gradient-text {
-  background: linear-gradient(135deg, #38bdf8 0%, #0284c7 60%, #0369a1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Card Glow & Glassmorphism */
+/* Glassmorphism Light Panels */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(74, 222, 128, 0.25);
+  box-shadow: 0 10px 25px -5px rgba(34, 197, 94, 0.08);
 }
 
-.glass-panel-dark {
-  background: rgba(15, 44, 79, 0.7);
+.glass-panel-light {
+  background: rgba(240, 253, 244, 0.85);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  box-shadow: 0 10px 25px -5px rgba(34, 197, 94, 0.06);
 }
 
 .card-hover {
@@ -70,16 +72,16 @@ h1, h2, h3, h4, .font-heading {
 
 .card-hover:hover {
   transform: translateY(-5px);
-  box-shadow: 0 20px 25px -5px rgba(15, 44, 79, 0.12), 0 8px 10px -6px rgba(15, 44, 79, 0.08);
+  box-shadow: 0 20px 25px -5px rgba(34, 197, 94, 0.15), 0 8px 10px -6px rgba(34, 197, 94, 0.08);
 }
 
 /* Pulse animation for CTA & status */
 @keyframes pulseGlow {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.6);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6);
   }
   50% {
-    box-shadow: 0 0 0 14px rgba(245, 158, 11, 0);
+    box-shadow: 0 0 0 14px rgba(34, 197, 94, 0);
   }
 }
 
@@ -125,7 +127,7 @@ h1, h2, h3, h4, .font-heading {
   height: 100%;
   pointer-events: auto;
   z-index: 1;
-  opacity: 0.85;
+  opacity: 0.75;
 }
 
 /* Floating AI Mathematical Equation Badges */
@@ -134,7 +136,7 @@ h1, h2, h3, h4, .font-heading {
     transform: translateY(0px) rotate(0deg);
   }
   50% {
-    transform: translateY(-14px) rotate(3deg);
+    transform: translateY(-12px) rotate(3deg);
   }
 }
 
@@ -152,26 +154,53 @@ h1, h2, h3, h4, .font-heading {
   animation-duration: 8s;
 }
 
-/* Glowing Neon Borders */
-.neon-border-amber {
-  box-shadow: 0 0 25px -5px rgba(245, 158, 11, 0.4);
-}
-
-.neon-border-cyan {
-  box-shadow: 0 0 25px -5px rgba(56, 189, 248, 0.4);
+/* Neon Borders in Parrot Green */
+.neon-border-green {
+  box-shadow: 0 0 25px -5px rgba(34, 197, 94, 0.35);
 }
 
 /* Interactive Math Lab Sliders & Controls */
 input[type=range] {
-  accent-color: #f59e0b;
+  accent-color: #16a34a;
 }
 
 /* Interactive Canvas for Math Visualizer */
 .visualizer-canvas {
-  background: #06101e;
+  background: #0f291e;
   border-radius: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.7);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f0fdf4;
+}
+::-webkit-scrollbar-thumb {
+  background: #86efac;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #22c55e;
+}
+
+/* Floating symbols in hero background */
+.floating-symbol {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.12;
+  font-family: 'Outfit', serif;
+  user-select: none;
+  animation: floatSlow 8s ease-in-out infinite;
+  z-index: 1;
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-16px) rotate(6deg); }
 }
 
 /* Modal transition */
